@@ -1,0 +1,11 @@
+<template>
+  <aside class.bind="open ? 'open' : ''">
+    <a repeat.for="navItem of navigation" class="at-nav-item ${navItem.isActive ? 'active' : ''}" href="${navItem.href}">
+      <span class="fa fa-fw fa-${navItem.settings.icon}"></span>
+      <span show.bind="open">${navItem.title}</span>
+    </a>
+    <a click.trigger="open = !open" class="at-nav-item at-nav-toggle">
+      <span class="fa fa-fw fa-${open ? 'angle-left' : 'angle-right'}"></span>
+    </a>
+  </aside>
+</template>

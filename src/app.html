@@ -1,0 +1,10 @@
+<template>
+  <require from="./app.css"></require>
+  <require from="./resources/elements/at-menu/at-menu"></require>
+  <at-menu navigation.bind="router.navigation">
+  </at-menu>
+  <div class="at-container content">
+    <router-view>
+    </router-view>
+  </div>
+</template>

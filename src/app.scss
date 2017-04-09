@@ -1,0 +1,41 @@
+$fa-font-path:   "../fonts";
+@import "node_modules/font-awesome/scss/font-awesome";
+
+@import "./sass/colors";
+@import "node_modules/bulma/bulma";
+
+$menu-width: 60px;
+$menu-width-open: 160px;
+
+at-menu aside {
+  position: fixed;
+  height: 100vh;
+  width: $menu-width;
+  overflow: hidden;
+  &.open {
+    width: $menu-width-open;
+  }
+  background-color: $grey-dark;
+  color: $white-ter;
+
+  .at-nav-item {
+    display: block;
+    margin: 14px;
+    color: $white-ter;
+    &.active {
+      color: $primary;
+    }
+    &.at-nav-toggle {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+.at-container {
+  padding: 10px;
+  margin-left: $menu-width;
+  &.menu-open {
+    margin-left: $menu-width-open;
+  }
+}
