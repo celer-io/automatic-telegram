@@ -11,8 +11,10 @@
     "aurelia-animator-css": "^1.0.1",
     "aurelia-bootstrapper": "^2.1.0",
     "bluebird": "^3.4.1",
+    "codemirror": "^5.25.0",
     "font-awesome": "^4.7.0",
     "requirejs": "^2.3.2",
+    "simplemde": "^1.11.2",
     "text": "github:requirejs/text#latest"
   },
   "peerDependencies": {},

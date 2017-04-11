@@ -120,6 +120,14 @@
           "aurelia-templating-binding",
           "text",
           {
+            "name": "simplemde",
+            "path": "../node_modules/simplemde/debug/",
+            "main": "simplemde",
+            "resources": [
+              "simplemde.css"
+            ]
+          },
+          {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",
             "main": "aurelia-templating-resources"

@@ -1,0 +1,36 @@
+<template>
+  <require from="../resources/elements/at-md-wysiwyg/at-md-wysiwyg"></require>
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label">Titre</label>
+        <p class="control ${loading ? 'is-loading' : ''}">
+          <input class="input" type="text" placeholder="titre" value.bind="post.metadata.title">
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label">Description</label>
+        <p class="control ${loading ? 'is-loading' : ''}">
+          <textarea class="textarea" placeholder="Description" value.bind="post.metadata.description"></textarea>
+        </p>
+      </div>
+
+      <hr>
+      <div class="field">
+        <label class="label">Contenu du post</label>
+        <at-md-wysiwyg content.bind="post.content" refresh.bind="refresh">
+        </at-md-wysiwyg>
+      </div>
+
+      <div class="field">
+        <p class="control ${loading ? 'is-loading' : ''}">
+          <button click.trigger="save()" class="button is-primary">Submit</button>
+        </p>
+      </div>
+    </div>
+    <div class="column is-one-third" style="background-color: whitesmoke; min-height: 100vh;">
+
+    </div>
+  </div>
+</template>
