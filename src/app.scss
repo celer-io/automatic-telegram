@@ -4,8 +4,8 @@ $fa-font-path:   "../fonts";
 @import "./sass/colors";
 @import "node_modules/bulma/bulma";
 
-$menu-width: 60px;
-$menu-width-open: 160px;
+$menu-width: 4rem;
+$menu-width-open: 9rem;
 
 at-menu aside {
   position: fixed;
@@ -20,7 +20,7 @@ at-menu aside {
 
   .at-nav-item {
     display: block;
-    margin: 14px;
+    margin: 1rem;
     color: $white-ter;
     &.active {
       color: $primary;
@@ -37,5 +37,42 @@ at-menu aside {
   margin-left: $menu-width;
   &.menu-open {
     margin-left: $menu-width-open;
+  }
+}
+
+.pane {
+  &-separator {
+    width: 3rem;
+    padding: 0;
+    min-height: 100vh;
+    background-color: $white-bis;
+    border: 1px solid $grey-lighter;
+    border-top: none;
+    border-bottom: none;
+    cursor: ew-resize;
+
+    &-menu {
+      .menu-action {
+        margin: 0.6rem;
+      }
+      position: fixed;
+      background-color: $white-bis;
+      border: 1px solid $grey-lighter;
+      border-top: none;
+      border-left: none;
+    }
+
+    &-handle {
+      position: fixed;
+      padding: 0.7rem;
+      top: 46%;
+      color: $grey-lighter;
+    }
+  }
+  &-editor {
+
+  }
+  &-preview {
+    background-color: $white-ter;
   }
 }

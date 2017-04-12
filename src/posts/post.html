@@ -1,7 +1,7 @@
 <template>
   <require from="../resources/elements/at-md-wysiwyg/at-md-wysiwyg"></require>
   <div class="columns">
-    <div class="column">
+    <div class="column pane-editor" element.ref="editorPane">
       <div class="field">
         <label class="label">Titre</label>
         <p class="control ${loading ? 'is-loading' : ''}">
@@ -29,7 +29,32 @@
         </p>
       </div>
     </div>
-    <div class="column is-one-third" style="background-color: whitesmoke; min-height: 100vh;">
+    <div class="column is-narrow pane-separator" element.ref="paneSep">
+      <div class="pane-separator-menu">
+        <div class="menu-action">
+          <a class="button is-small is-success">
+            <span class="icon is-small">
+              <i class="fa fa-save"></i>
+            </span>
+          </a>
+          Sauvegarder
+        </div>
+        <div class="menu-action">
+          <a class="button is-small is-info">
+            <span class="icon is-small">
+              <i class="fa fa-refresh"></i>
+            </span>
+          </a>
+          <span>Generer</span>
+        </div>
+      </div>
+      <div class="pane-separator-handle">
+        <span class="icon">
+          <i class="fa fa-ellipsis-v"></i>
+        </span>
+      </div>
+    </div>
+    <div class="column is-one-third pane-preview" element.ref="previewPane">
 
     </div>
   </div>

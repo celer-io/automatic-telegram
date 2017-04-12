@@ -5928,6 +5928,129 @@ var requirejs, require, define;
     req(cfg);
 }(this, (typeof setTimeout === 'undefined' ? undefined : setTimeout)));
 
+;(() => {
+  /**
+  * THIS OBJECT WILL ONLY WORK IF your target is positioned relative or absolute,
+  * or anything that works with the top and left css properties (not static).
+  *
+  * Howto
+  * ============
+  *
+  * document.getElementById('my_target').sdrag()
+  *
+  * onDrag, onStop
+  * -------------------
+  * document.getElementById('my_target').sdrag(onDrag, null)
+  * document.getElementById('my_target').sdrag(null, onStop)
+  * document.getElementById('my_target').sdrag(onDrag, onStop)
+  *
+  * Both onDrag and onStop callback take the following arguments:
+  *
+  * - el, the currentTarget element (#my_target in the above examples)
+  * - pageX: the mouse event's pageX property (horizontal position of the mouse compared to the viewport)
+  * - startX: the distance from the element's left property to the horizontal mouse position in the viewport.
+  *                  Usually, you don't need to use that property it is internally used to fix the undesirable
+  *                  offset that naturally occurs when you don't drag the element by its top left corner
+  *                  (for instance if you drag the element from its center).
+  * - pageY: the mouse event's pageX property (horizontal position of the mouse compared to the viewport)
+  * - startY: same as startX, but for the vertical axis (and element's top property)
+  *
+  *
+  *
+  * The onDrag callback accepts an extra argument: fix.
+  *
+  * fix is an array used to fix the coordinates applied to the target.
+  *
+  * It can be used to constrain the movement of the target inside of a virtual rectangle area for instance.
+  * Put a variable in the fix array to override it.
+  * The possible keys are:
+  *
+  * - pageX
+  * - startX
+  * - pageY
+  * - startY
+  * - skipX
+  * - skipY
+  *
+  * skipX and skipY let you skip the updating of the target's left property.
+  * This might be required in some cases where the positioning of the target
+  * is automatically done by the means of other css properties.
+  *
+  *
+  *
+  *
+  *
+  *
+  * Direction
+  * -------------
+  * With direction, you can constrain the drag to one direction only: horizontal or vertical.
+  * Accepted values are:
+  *
+  * - <undefined> (the default)
+  * - vertical
+  * - horizontal
+  *
+  *
+  *
+  *
+  */
+
+  // simple drag
+  function sdrag (onDrag, onStop, direction) {
+    var startX = 0
+    var startY = 0
+    var el = this
+    var dragging = false
+
+    function move (e) {
+      var fix = {}
+      onDrag && onDrag(el, e.pageX, startX, e.pageY, startY, fix)
+      if (direction !== 'vertical') {
+        var pageX = ('pageX' in fix) ? fix.pageX : e.pageX
+        if ('startX' in fix) {
+          startX = fix.startX
+        }
+        if (('skipX' in fix) === false) {
+          el.style.left = (pageX - startX) + 'px'
+        }
+      }
+      if (direction !== 'horizontal') {
+        var pageY = ('pageY' in fix) ? fix.pageY : e.pageY
+        if ('startY' in fix) {
+          startY = fix.startY
+        }
+        if (('skipY' in fix) === false) {
+          el.style.top = (pageY - startY) + 'px'
+        }
+      }
+    }
+
+    function startDragging (e) {
+      if (e.currentTarget instanceof HTMLElement || e.currentTarget instanceof SVGElement) { // eslint-disable-line
+        dragging = true
+        var left = el.style.left ? parseInt(el.style.left) : 0
+        var top = el.style.top ? parseInt(el.style.top) : 0
+        startX = e.pageX - left
+        startY = e.pageY - top
+        window.addEventListener('mousemove', move)
+      } else {
+        throw new Error('Your target must be an html element')
+      }
+    }
+
+    this.addEventListener('mousedown', startDragging)
+    window.addEventListener('mouseup', function (e) {
+      if (dragging === true) {
+        dragging = false
+        window.removeEventListener('mousemove', move)
+        onStop && onStop(el, e.pageX, startX, e.pageY, startY)
+      }
+    })
+  }
+
+  Element.prototype.sdrag = sdrag // eslint-disable-line
+})()
+
 _aureliaConfigureModuleLoader();
 define('aurelia-binding',['exports', 'aurelia-logging', 'aurelia-pal', 'aurelia-task-queue', 'aurelia-metadata'], function (exports, _aureliaLogging, _aureliaPal, _aureliaTaskQueue, _aureliaMetadata) {
   'use strict';
@@ -44378,4 +44501,4 @@ define('aurelia-testing/wait',['exports'], function (exports) {
     }, options);
   }
 });
-function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"simplemde","location":"../node_modules/simplemde/debug/","main":"simplemde"},{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"}],"stubModules":["text"],"shim":{},"bundles":{"app-bundle":["app","environment","main","web-api","assets/assets","dashboard/dashboard","posts/post","posts/posts","resources/index","resources/elements/at-md-wysiwyg/at-md-wysiwyg","resources/elements/at-menu/at-menu","sass/colors"]}})}
+function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"simplemde","location":"../node_modules/simplemde/debug/","main":"simplemde"},{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"}],"stubModules":["text"],"shim":{},"bundles":{"app-bundle":["app","environment","main","web-api","assets/assets","dashboard/dashboard","resources/index","posts/post","posts/posts","resources/elements/at-md-wysiwyg/at-md-wysiwyg","resources/elements/at-menu/at-menu","sass/colors"]}})}
