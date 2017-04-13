@@ -5,18 +5,20 @@ $fa-font-path:   "../fonts";
 @import "node_modules/bulma/bulma";
 
 $menu-width: 4rem;
-$menu-width-open: 9rem;
+$menu-width-open: 10rem;
 
 at-menu aside {
   position: fixed;
   height: 100vh;
-  width: $menu-width;
   overflow: hidden;
+  z-index: 3;
+  background-color: $grey-dark;
+  color: $white-ter;
+
+  width: $menu-width;
   &.open {
     width: $menu-width-open;
   }
-  background-color: $grey-dark;
-  color: $white-ter;
 
   .at-nav-item {
     display: block;
@@ -40,39 +42,54 @@ at-menu aside {
   }
 }
 
-.pane {
-  &-separator {
-    width: 3rem;
-    padding: 0;
-    min-height: 100vh;
-    background-color: $white-bis;
-    border: 1px solid $grey-lighter;
-    border-top: none;
-    border-bottom: none;
-    cursor: ew-resize;
+// .pane {
+at-pane-resizer {
+  @extend .column;
+  @extend .is-narrow;
 
-    &-menu {
-      .menu-action {
-        margin: 0.6rem;
-      }
-      position: fixed;
-      background-color: $white-bis;
-      border: 1px solid $grey-lighter;
-      border-top: none;
-      border-left: none;
-    }
+  width: 1.5rem;
+  // padding: 0;
+  padding-left: 0;
+  padding-right: 0;
+  // position: fixed;
+  min-height: 100vh;
+  background-color: $grey-dark;
+  // border: 1px solid $grey-lighter;
+  // border-top: none;
+  // border-bottom: none;
+  cursor: ew-resize;
 
-    &-handle {
-      position: fixed;
-      padding: 0.7rem;
-      top: 46%;
-      color: $grey-lighter;
+  .separator-menu {
+    // a {
+    //   width: 1.5rem;
+    //   display: block;
+    //   color: $white-ter;
+    //   &.is-success {background-color: $success}
+    //   &.is-info {background-color: $info}
+    //   vertical-align: middle;
+    //   line-height: 1rem;
+    //   .fa {
+    //     font-size: 1rem;
+    //   }
+    // }
+    position: fixed;
+    a.button {
+      padding: 0.45rem;
+      border-radius: 0px;
     }
   }
-  &-editor {
 
-  }
-  &-preview {
-    background-color: $white-ter;
+  .separator-handle {
+    position: fixed;
+    padding: 0.60rem;
+    top: 50%;
+    color: $grey-lighter;
   }
 }
+// &-editor {
+//
+// }
+// &-preview {
+//   background-color: $white-ter;
+// }
+// }

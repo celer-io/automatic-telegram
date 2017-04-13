@@ -13,7 +13,7 @@ export class App {
     config.map([
       {
         settings: {icon: 'home'},
-        route: '',
+        route: ['', 'index.html'],
         title: 'Dashboard',
         moduleId: 'dashboard/dashboard',
         nav: 0
