@@ -1,22 +1,12 @@
 // import {Resizer} from '../resources/elements/pane-resizer/resizer'
+import {WebAPI} from '../web-api'
 
 export class Assets {
-  constructor () {
+  static inject () { return [WebAPI] }
+
+  constructor (api) {
+    this.api = api
     this.message = 'Assets'
-    this.menu = [
-      {
-        color: 'success',
-        name: 'Sauvegarder',
-        icon: 'save',
-        callback: this.save
-      },
-      {
-        color: 'info',
-        name: 'Generer',
-        icon: 'cog',
-        callback: this.generate
-      }
-    ]
   }
 
   attached () {
@@ -25,15 +15,20 @@ export class Assets {
       leftPane: this.leftPane,
       separator: this.separator
     }
-    // this.preview = window.open('toto', 'toto')
-    // console.log('this.preview :', this.preview)
-    // this.resizer = new Resizer(this.separator, this.leftPane, this.rightPane)
+    this.paneMode = 'one_third'
   }
 
-  previewUrl = 'assets'
+  activate (params, routeConfig) {
+    console.log('routeConfig :', routeConfig)
+  }
+  previewUrl = '/'
 
-  goToPreview () {
-    console.log('this.preview :', this.preview)
+  loadPreviewIfr () {
+    console.log('this.rightPane :', this.rightPane.firstChild)
+    // this.rightPane
+  }
+
+  loadPreviewExt () {
     if (this.preview) {
       this.preview.location.assign(this.previewUrl)
       this.preview.focus()
@@ -42,15 +37,19 @@ export class Assets {
     }
   }
 
-  generate () {
-    if (this.preview) {
-      this.preview.focus()
-    } else {
-      this.preview = window.open('posts')
-    }
+  generate (api) {
+    this.loading = true
+    return this.api.generate().then(res => {
+      console.log('res :', res)
+      this.loading = false
+    })
   }
 
   save () {
-    this.preview.location.assign('posts')
+    this.loading = true
+    return this.api.save(this.post).then(res => {
+      console.log('res :', res)
+      this.loading = false
+    })
   }
 }

@@ -7,9 +7,6 @@ export class Post {
   refresh = false
 
   initPanelResizer () {
-    // The script below constrains the target to move horizontally between a left and a right virtual boundaries.
-    // - the left limit is positioned at 10% of the screen width
-    // - the right limit is positioned at 90% of the screen width
     var leftLimit = 10
     var rightLimit = 90
 
@@ -37,12 +34,10 @@ export class Post {
   }
 
   constructor (api) {
-    console.log('constructor')
     this.api = api
   }
 
   attached () {
-    console.log('attached')
     this.initPanelResizer()
   }
 

@@ -4,38 +4,83 @@
     <div class="column content" element.ref="leftPane">
       <h1>leftpane</h1>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <pre>
+        ${paneMode}
+
+      </pre>
     </div>
-    <!-- <div class="column is-narrow" element.ref="separator"> -->
-      <at-pane-resizer panes.bind="panes" element.ref="separator">
+    <at-pane-resizer panes.bind="panes" mode.bind="paneMode" element.ref="separator">
+      <div slot="top-menu">
         <div class="menu-action">
-          <a click.trigger="save()" class="button is-small is-success">
+          <a click.trigger="save()">
             <span class="icon is-small">
               <i class="fa fa-save"></i>
             </span>
-            <!-- <span>Sauvegarder</span> -->
+            <label>Sauvegarder</label>
           </a>
         </div>
         <div class="menu-action">
-          <a click.trigger="generate()" class="button is-small is-info">
+          <a click.trigger="generate()">
             <span class="icon is-small">
               <i class="fa fa-cog"></i>
             </span>
-            <!-- <span>Generer</span> -->
+            <label>Generer</label>
           </a>
         </div>
         <div class="menu-action">
-          <a click.trigger="goToPreview()" class="button is-small is-info">
+          <a click.trigger="loadPreviewExt()">
             <span class="icon is-small">
               <i class="fa fa-external-link-square"></i>
             </span>
-            <!-- <span>Generer</span> -->
+            <label>Previsualiser</label>
           </a>
         </div>
-      </at-pane-resizer>
-    <!-- </div> -->
+        <div class="menu-action">
+          <a click.trigger="loadPreviewIfr()">
+            <span class="icon is-small">
+              <i class="fa fa-play"></i>
+            </span>
+            <label>Previsualiser</label>
+          </a>
+        </div>
+      </div>
+      <div slot="bottom-menu">
+        <div class="menu-action">
+          <a click.trigger="paneMode = 'wide'">
+            <span class="icon is-small">
+              <i class="fa fa-arrows-alt"></i>
+            </span>
+            <label>Widescreen</label>
+          </a>
+        </div>
+        <div class="menu-action">
+          <a click.trigger="paneMode = 'one_third'" show.bind="paneMode !== 'one_third'">
+            <span class="icon is-small">
+              <i class="fa fa-columns"></i>
+            </span>
+            <label>Middle</label>
+          </a>
+        </div>
+        <div class="menu-action" show.bind="paneMode !== 'max'">
+          <a click.trigger="paneMode = 'max'">
+            <span class="icon is-small">
+              <i class="fa fa-toggle-left"></i>
+            </span>
+            <label>Maximize</label>
+          </a>
+        </div>
+        <div class="menu-action" show.bind="paneMode !== 'min'">
+          <a click.trigger="paneMode = 'min'">
+            <span class="icon is-small">
+              <i class="fa fa-toggle-right"></i>
+            </span>
+            <label>Minimize</label>
+          </a>
+        </div>
+      </div>
+    </at-pane-resizer>
     <div class="column content is-one-third" element.ref="rightPane">
-      <h1>rightpane</h1>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <iframe src="${previewUrl}" width="100%" height="100%"></iframe>
     </div>
   </div>
 </template>

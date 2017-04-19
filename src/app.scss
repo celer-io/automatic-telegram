@@ -35,12 +35,18 @@ at-menu aside {
 }
 
 .at-container {
-  padding: 10px;
+  padding: 12px;
   margin-left: $menu-width;
   &.menu-open {
     margin-left: $menu-width-open;
   }
 }
+
+.column:-webkit-full-screen	{
+  width: 100% !important;
+  height: 100% !important;
+}
+// .column:-moz-full-screen		{ width: 100% }
 
 // .pane {
 at-pane-resizer {
@@ -48,35 +54,40 @@ at-pane-resizer {
   @extend .is-narrow;
 
   width: 1.5rem;
-  // padding: 0;
   padding-left: 0;
   padding-right: 0;
-  // position: fixed;
   min-height: 100vh;
   background-color: $grey-dark;
-  // border: 1px solid $grey-lighter;
-  // border-top: none;
-  // border-bottom: none;
   cursor: ew-resize;
+  // -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  // -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  // box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
 
-  .separator-menu {
-    // a {
-    //   width: 1.5rem;
-    //   display: block;
-    //   color: $white-ter;
-    //   &.is-success {background-color: $success}
-    //   &.is-info {background-color: $info}
-    //   vertical-align: middle;
-    //   line-height: 1rem;
-    //   .fa {
-    //     font-size: 1rem;
-    //   }
-    // }
-    position: fixed;
-    a.button {
-      padding: 0.45rem;
-      border-radius: 0px;
+  .top-menu, .bottom-menu {
+    a {
+      padding: 4px;
+      color: $white-ter;
+      background-color: $grey-dark;
+      .icon {
+        vertical-align: text-top;
+      }
+      label {
+        vertical-align: text-top;
+        display: none;
+        font-size: 12px;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+      }
+      &:hover label {display: inline-flex;}
     }
+    position: fixed;
+  }
+  .bottom-menu {
+    bottom: 0.75rem;
+  }
+
+  .menu-bottom {
+
   }
 
   .separator-handle {
@@ -86,10 +97,3 @@ at-pane-resizer {
     color: $grey-lighter;
   }
 }
-// &-editor {
-//
-// }
-// &-preview {
-//   background-color: $white-ter;
-// }
-// }

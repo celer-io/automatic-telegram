@@ -1,11 +1,15 @@
 <template>
-  <div class="separator-menu">
-    <slot>
+  <div class="top-menu">
+    <slot name="top-menu">
     </slot>
   </div>
   <div class="separator-handle">
     <i class="fa fa-ellipsis-v"></i>
   </div>
+  <div class="bottom-menu">
+    <slot name="bottom-menu">
+    </slot>
+  </div>
 </template>
-<div class="column is-narrow pane-separator" element.ref="paneSep">
-</div>
+<!-- <div class="column is-narrow pane-separator" element.ref="paneSep">
+</div> -->
